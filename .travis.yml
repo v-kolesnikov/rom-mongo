@@ -1,26 +1,32 @@
 language: ruby
+
 dist: trusty
-sudo: required
+sudo: false
+
 cache: bundler
+
 services:
   - mongodb
-bundler_args: --without yard guard benchmarks tools
-after_success:
-  - '[ -d coverage ] && bundle exec codeclimate-test-reporter'
-script: "bundle exec rake ci"
+
 rvm:
-  - 2.2.6
   - 2.3.3
-  - 2.4.1
-  - rbx-3
-  - jruby
+  - 2.5.0
+  - jruby-9.1.13.0
+
+bundler_args: --without tools
+
 env:
   global:
     - JRUBY_OPTS='--dev -J-Xmx1024M'
     - COVERAGE='true'
-matrix:
-  allow_failures:
-    - rvm: rbx-3
+
+before_install:
+  # NOTE: https://github.com/travis-ci/travis-ci/issues/8978
+  - gem update --system
+
+after_success:
+  - '[ -d coverage ] && bundle exec codeclimate-test-reporter'
+
 notifications:
   webhooks:
     urls:
