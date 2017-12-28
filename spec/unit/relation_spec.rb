@@ -28,4 +28,14 @@ RSpec.describe ROM::Mongo::Relation do
         to eql([{name: 'Joe',}, {name: 'Jane'}])
     end
   end
+
+  describe '#aggregate' do
+    subject(:relation) { users.with(auto_struct: false).aggregate(query) }
+
+    let(:query) { [{ '$group': { _id: 1, count: { '$sum': 1 } } }] }
+
+    it 'aggregate documents' do
+      expect(relation.to_a).to eql([{ "_id" => 1, "count" => 2 }])
+    end
+  end
 end

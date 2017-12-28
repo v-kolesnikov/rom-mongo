@@ -16,6 +16,11 @@ module ROM
 
       attr_reader :criteria
 
+      def aggregate(*args)
+        with_options(collection.find(criteria.selector).aggregate(*args),
+                     criteria.options)
+      end
+
       def find(criteria = {})
         Dataset.new(collection, Criteria.new.where(criteria))
       end

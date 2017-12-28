@@ -11,7 +11,7 @@ module ROM
 
       schema_class Mongo::Schema
 
-      forward :insert, :find, :skip, :limit, :where, :order
+      forward :aggregate, :find, :insert, :limit, :skip, :order, :where
 
       # @api private
       def self.view_methods
