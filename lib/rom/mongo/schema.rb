@@ -1,8 +1,8 @@
-require 'rom/schema'
+require 'rom/memory/schema'
 
 module ROM
   module Mongo
-    class Schema < ROM::Schema
+    class Schema < ROM::Memory::Schema
       # @api public
       def call(relation)
         relation.new(relation.dataset.only(map(&:name)), schema: self)
