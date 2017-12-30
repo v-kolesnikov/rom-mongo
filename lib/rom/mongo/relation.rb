@@ -11,11 +11,15 @@ module ROM
 
       schema_class Mongo::Schema
 
-      forward :aggregate, :find, :insert, :limit, :skip, :order, :where
+      forward :find, :insert, :limit, :skip, :order, :where
 
       # @api private
       def self.view_methods
         super + [:by_pk]
+      end
+
+      def aggregate(*args)
+        dataset.collection.find.aggregate(*args)
       end
 
       # @api public
